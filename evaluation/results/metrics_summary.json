@@ -1,0 +1,95 @@
+{
+  "n_total": 40,
+  "overall_full_pipeline_accuracy": 0.675,
+  "overall_baseline_accuracy": 0.0,
+  "overall_mean_ocr_cer": 0.3181,
+  "by_degradation_level": {
+    "clean": {
+      "n": 10,
+      "mean_ocr_cer": 0.02,
+      "full_pipeline_accuracy": 1.0,
+      "baseline_accuracy": 0.0
+    },
+    "light": {
+      "n": 10,
+      "mean_ocr_cer": 0.02,
+      "full_pipeline_accuracy": 1.0,
+      "baseline_accuracy": 0.0
+    },
+    "medium": {
+      "n": 10,
+      "mean_ocr_cer": 0.2324,
+      "full_pipeline_accuracy": 0.7,
+      "baseline_accuracy": 0.0
+    },
+    "heavy": {
+      "n": 10,
+      "mean_ocr_cer": 1.0,
+      "full_pipeline_accuracy": 0.0,
+      "baseline_accuracy": 0.0
+    }
+  },
+  "by_pattern_type": {
+    "abbreviation": {
+      "n": 12,
+      "full_engine_slots_accuracy": 0.75,
+      "baseline_slots_accuracy": 0.0,
+      "full_pipeline_accuracy": 0.6667,
+      "baseline_full_accuracy": 0.0
+    },
+    "numeric3": {
+      "n": 8,
+      "full_engine_slots_accuracy": 0.75,
+      "baseline_slots_accuracy": 0.75,
+      "full_pipeline_accuracy": 0.75,
+      "baseline_full_accuracy": 0.0
+    },
+    "numeric4": {
+      "n": 4,
+      "full_engine_slots_accuracy": 0.75,
+      "baseline_slots_accuracy": 0.0,
+      "full_pipeline_accuracy": 0.75,
+      "baseline_full_accuracy": 0.0
+    },
+    "phrase": {
+      "n": 12,
+      "full_engine_slots_accuracy": 0.75,
+      "baseline_slots_accuracy": 0.3333,
+      "full_pipeline_accuracy": 0.5833,
+      "baseline_full_accuracy": 0.0
+    },
+    "prn": {
+      "n": 4,
+      "full_engine_slots_accuracy": 0.75,
+      "baseline_slots_accuracy": 0.0,
+      "full_pipeline_accuracy": 0.75,
+      "baseline_full_accuracy": 0.0
+    }
+  },
+  "confidence_calibration": [
+    {
+      "bucket": "0.0-0.4",
+      "n": 12,
+      "mean_confidence": 0.0,
+      "empirical_accuracy": 0.0
+    },
+    {
+      "bucket": "0.4-0.7",
+      "n": 3,
+      "mean_confidence": 0.55,
+      "empirical_accuracy": 1.0
+    },
+    {
+      "bucket": "0.7-0.9",
+      "n": 25,
+      "mean_confidence": 0.8,
+      "empirical_accuracy": 0.96
+    },
+    {
+      "bucket": "0.9-1.0",
+      "n": 0,
+      "mean_confidence": 0.0,
+      "empirical_accuracy": 0.0
+    }
+  ]
+}

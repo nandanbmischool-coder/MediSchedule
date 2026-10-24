@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install system deps (tesseract for OCR)
+        run: sudo apt-get update && sudo apt-get install -y tesseract-ocr
+      - name: Install Python deps
+        run: pip install -r requirements-dev.txt
+      - name: Run unit tests
+        run: python -m pytest tests/ -v
+      - name: Run evaluation harness (regression check on benchmark accuracy)
+        run: python evaluation/run_evaluation.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-results
+          path: evaluation/results/

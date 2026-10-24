@@ -1,0 +1,4 @@
+# OPTIONAL: offline OCR for PRINTED labels without installing Tesseract/Xcode/Homebrew.
+# Needs Python 3.12 or older. Handwriting does not need this - it uses the Gemini key.
+rapidocr-onnxruntime
+numpy

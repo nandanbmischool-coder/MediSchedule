@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediSchedule – Prescription Reader</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#12202f;--mute:#5b6b7d;--line:#e2e8f0;--brand:#0f766e;--brand2:#14b8a6;--warn:#b45309;--warnbg:#fef3c7;--bad:#b91c1c;--badbg:#fee2e2;--ok:#15803d;--okbg:#dcfce7;--shadow:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06)}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1220;--card:#131c2e;--ink:#e8eef7;--mute:#93a4b8;--line:#243049;--brand:#2dd4bf;--brand2:#14b8a6;--warn:#fbbf24;--warnbg:#3a2a08;--bad:#fca5a5;--badbg:#3b1212;--ok:#86efac;--okbg:#0f2e1a;--shadow:0 8px 24px rgba(0,0,0,.4)}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:880px;margin:0 auto;padding:20px 16px 80px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;font-size:24px}
+h1{font-size:1.35rem;margin:0}header p{margin:0;color:var(--mute);font-size:.9rem}
+.lang{margin-left:auto;display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:none;color:var(--mute);padding:6px 14px;font-weight:600;cursor:pointer}.lang button.on{background:var(--brand);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:20px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}.tab{flex:1;padding:10px;border-radius:12px;border:1px solid var(--line);background:none;color:var(--ink);font-weight:600;cursor:pointer}.tab.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:34px 16px;text-align:center;cursor:pointer;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 6%,transparent)}
+.drop b{display:block;font-size:1.05rem}.drop span{color:var(--mute);font-size:.9rem}.drop img{max-width:100%;max-height:260px;border-radius:12px}
+textarea{width:100%;min-height:130px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:12px;font:inherit;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 20px;font-weight:700;font-size:1rem;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}
+.btn.sec{background:none;border:1px solid var(--line);color:var(--ink)}.btn:disabled{opacity:.5;cursor:wait}.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.err{background:var(--badbg);color:var(--bad);padding:12px 14px;border-radius:12px;margin-top:12px}
+.notice{background:var(--warnbg);color:var(--warn);padding:12px 14px;border-radius:12px;font-size:.92rem;margin-bottom:18px}
+h2{font-size:1.1rem;margin:0 0 4px}.sub{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+.med{border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}.med.flag{border-color:var(--warn)}
+.grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:10px}@media(max-width:640px){.grid{grid-template-columns:1fr 1fr}}
+label{font-size:.75rem;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;display:block;margin-bottom:4px}
+input,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700}.chip.ok{background:var(--okbg);color:var(--ok)}.chip.warn{background:var(--warnbg);color:var(--warn)}.chip.bad{background:var(--badbg);color:var(--bad)}
+.mh{display:flex;align-items:center;gap:10px;margin-bottom:12px}.mh .x{margin-left:auto;background:none;border:0;color:var(--mute);cursor:pointer;font-size:1.1rem}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}@media(max-width:520px){.slots{grid-template-columns:repeat(2,1fr)}}
+.slot{border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.slot.act{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 8%,transparent)}
+.slot .ic{font-size:1.5rem}.slot small{display:block;color:var(--mute);font-size:.75rem}
+.step{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px}.step button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:1.2rem;cursor:pointer}.step b{min-width:28px;font-size:1.2rem}
+.warns{margin:10px 0 0;padding:0;list-style:none}.warns li{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:8px 12px;font-size:.88rem;margin-top:6px}
+.confirm{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:.92rem}.confirm input{width:20px;height:20px}
+.tl{position:relative;margin-top:6px}.ts{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.ts:first-child{border-top:0}
+.tt{text-align:center}.tt .ic{font-size:2rem}.tt b{display:block}.tt small{color:var(--mute)}
+.dose{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--bg);margin-bottom:8px;flex-wrap:wrap}
+.pills{font-size:1.3rem;letter-spacing:2px}.dose .n{font-weight:700}.dose .m{color:var(--mute);font-size:.88rem}.tag{margin-left:auto;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--okbg);color:var(--ok)}
+.empty{color:var(--mute);text-align:center;padding:10px}.hide{display:none!important}
+details{margin-top:10px;color:var(--mute);font-size:.88rem}pre{white-space:pre-wrap;background:var(--bg);padding:10px;border-radius:10px;margin:8px 0 0}
+.spin{width:18px;height:18px;border:3px solid #fff5;border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite}@keyframes s{to{transform:rotate(360deg)}}
+@media print{.noprint,header .lang{display:none!important}body{background:#fff}.card{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">💊</div>
+    <div><h1>MediSchedule</h1><p>Scan a prescription. Review. Get a clear daily plan.</p></div>
+    <div class="lang noprint"><button id="l-en" class="on">EN</button><button id="l-hi">हिं</button></div>
+  </header>
+
+  <section class="card noprint hide" id="keybox">
+    <h2>🔑 Turn on handwriting reading (free)</h2>
+    <p class="sub">Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color:var(--brand)">aistudio.google.com/apikey</a>, paste it here and press Save. Your photo is then read by Google Gemini (free tier may be used by Google to improve its products).</p>
+    <div class="row"><input id="keyin" type="password" autocomplete="off" placeholder="Paste key (starts with AIza…)" style="flex:1;min-width:200px;padding:12px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit"><button class="btn" id="keysave">Save key</button></div>
+    <label style="display:block;margin-top:8px;font-size:.9rem"><input type="checkbox" id="keyrem" checked> Remember on this computer (saves to a .env file)</label>
+    <div class="sub" id="keymsg"></div>
+  </section>
+
+  <section class="card noprint" id="input">
+    <div class="tabs"><button class="tab on" data-t="photo">📷 Photo</button><button class="tab" data-t="text">⌨️ Type text</button></div>
+    <div id="p-photo">
+      <label class="drop" id="drop"><input type="file" id="file" accept="image/*" capture="environment" hidden>
+        <div id="dropin"><b>Tap to take a photo or choose an image</b><span>or drag &amp; drop · JPG, PNG, WEBP · keep the label flat, bright and in focus</span></div></label>
+    </div>
+    <div id="p-text" class="hide"><textarea id="txt" placeholder="e.g.&#10;Tab Paracetamol 500mg 1-0-1 after food x 5 days&#10;Tab Pantoprazole 40mg OD before food"></textarea></div>
+    <div class="row"><button class="btn" id="go"><span id="gotxt">Read prescription</span></button><button class="btn sec" id="demo">Try an example</button></div>
+    <div class="err hide" id="err"></div>
+  </section>
+
+  <div id="out" class="hide">
+    <div class="notice hide" id="info"></div>
+    <div class="notice"><b>Always verify.</b> This tool reads text automatically and can make mistakes. Check every medicine below against your prescription, correct anything wrong, then tick “Confirmed”. If unsure, ask your doctor or pharmacist.</div>
+    <section class="card"><h2>1 · Review what was read</h2><p class="sub">Edit any field. Items marked ⚠ need your attention.</p><div id="meds"></div>
+      <div class="row noprint"><button class="btn sec" id="add">＋ Add a medicine</button></div>
+      <details><summary>Show raw text the scanner read</summary><pre id="raw"></pre></details></section>
+    <section class="card" id="plan"><h2>2 · Your daily schedule</h2><p class="sub" id="plansub"></p><div class="tl" id="tl"></div>
+      <div class="row noprint"><button class="btn" id="speak">🔊 Listen</button><button class="btn sec" id="stop">■ Stop</button><button class="btn sec" id="print">🖨 Print</button></div></section>
+  </div>
+</div>
+<script>
+const SL=[["morning","☀️","Morning","8:00 AM","सुबह"],["afternoon","🌤️","Afternoon","1:00 PM","दोपहर"],["evening","🌇","Evening","6:00 PM","शाम"],["night","🌙","Night","9:00 PM","रात"]];
+const FOOD={en:{before:"before food",after:"after food",with:"with food",none:""},hi:{before:"खाने से पहले",after:"खाने के बाद",with:"खाने के साथ",none:""}};
+const $=s=>document.querySelector(s);let meds=[],lang="en",file=null,mode="photo";
+const frac=q=>({0.5:"½",0.25:"¼",1.5:"1½",2.5:"2½"}[q]||String(q));
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{mode=b.dataset.t;document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x==b));$("#p-photo").classList.toggle("hide",mode!="photo");$("#p-text").classList.toggle("hide",mode!="text")});
+$("#l-en").onclick=()=>setLang("en");$("#l-hi").onclick=()=>setLang("hi");
+function setLang(l){lang=l;$("#l-en").classList.toggle("on",l=="en");$("#l-hi").classList.toggle("on",l=="hi");renderPlan()}
+const drop=$("#drop");
+function setFile(f){if(!f)return;file=f;const u=URL.createObjectURL(f);$("#dropin").innerHTML=`<img src="${u}" alt="Selected prescription"><br><span>${esc(f.name)} · tap to change</span>`}
+$("#file").onchange=e=>setFile(e.target.files[0]);
+["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
+drop.addEventListener("drop",e=>setFile(e.dataTransfer.files[0]));
+$("#demo").onclick=()=>{$(".tab[data-t=text]").click();$("#txt").value="Rx\nTab Paracetamol 500mg 1-0-1 after food x 5 days\nTab Pantoprazole 40mg OD before food x 14 days\nCap Amoxicillin 500mg TDS x 7 days\nTab Cetirizine 10mg once daily at night";run()};
+$("#go").onclick=run;
+async function checkKey(){try{const h=await (await fetch("/api/health")).json();$("#keybox").classList.toggle("hide",!!h.handwriting_available)}catch{}}
+$("#keysave").onclick=async()=>{const m=$("#keymsg");m.textContent="Saving…";
+  try{const r=await fetch("/api/key",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({key:$("#keyin").value,remember:$("#keyrem").checked})});const j=await r.json();
+    if(!r.ok)throw new Error(j.error);m.textContent="✓ Handwriting reader is on."+(j.saved?" Key saved.":"");$("#keyin").value="";setTimeout(checkKey,1200)}
+  catch(e){m.textContent="⚠ "+e.message}};
+checkKey();
+
+async function run(){
+  const err=$("#err");err.classList.add("hide");
+  const fd=new FormData();
+  if(mode=="photo"){if(!file)return showErr("Please choose a photo first, or switch to “Type text”.");fd.append("image",file)}
+  else{const t=$("#txt").value.trim();if(!t)return showErr("Please type or paste the prescription text.");fd.append("text",t)}
+  $("#go").disabled=true;$("#gotxt").innerHTML='<span class="spin"></span> Reading…';
+  try{if(mode=="photo")fd.set("image",await shrink(file),"photo.jpg");
+    const r=await fetch("/api/scan",{method:"POST",body:fd});let j;try{j=await r.json()}catch{throw new Error("The server sent an unexpected response. Is it still running?")}
+    if(!r.ok)throw new Error(j.error||"Something went wrong.");
+    meds=j.medicines.map(m=>({...m,confirmed:false}));
+    const info=$("#info");info.textContent=j.notice||"";info.classList.toggle("hide",!j.notice);
+    $("#raw").textContent=(j.ocr_text||"(typed text)")+`\n\nReader: ${j.engine}`+(j.ocr_confidence!=null?` · OCR confidence: ${Math.round(j.ocr_confidence*100)}%`:"");
+    $("#out").classList.remove("hide");renderMeds();renderPlan();$("#out").scrollIntoView({behavior:"smooth"})}
+  catch(e){showErr(e.message)}finally{$("#go").disabled=false;$("#gotxt").textContent="Read prescription"}
+}
+// Phone photos are often 5-12 MB; shrink to 1800px JPEG before upload (faster, and under the size limit).
+function shrink(f,max=1800){return new Promise(res=>{const img=new Image(),u=URL.createObjectURL(f);
+  img.onload=()=>{const k=Math.min(1,max/Math.max(img.width,img.height));if(k==1&&f.size<2e6){URL.revokeObjectURL(u);return res(f)}
+    const c=document.createElement("canvas");c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(u);c.toBlob(b=>res(b||f),"image/jpeg",.9)};
+  img.onerror=()=>{URL.revokeObjectURL(u);res(f)};img.src=u})}
+function showErr(m){const e=$("#err");e.textContent=m;e.classList.remove("hide")}
+
+function chip(m){if(m.needs_review||!hasDose(m)&&!/prn/.test(m.method_used))return'<span class="chip bad">⚠ Please check</span>';return m.confidence>=.85?'<span class="chip ok">✓ Clear</span>':'<span class="chip warn">⚠ Double-check</span>'}
+const hasDose=m=>Object.values(m.slots).some(v=>v>0);
+function renderMeds(){
+  $("#meds").innerHTML=meds.map((m,i)=>`<div class="med ${m.needs_review?"flag":""}" data-i="${i}">
+   <div class="mh">${chip(m)}<span style="color:var(--mute);font-size:.85rem">${m.method_used.replace(/[_:]/g," ")}</span><button class="x noprint" data-del="${i}" title="Remove" aria-label="Remove medicine">✕</button></div>
+   <div class="grid"><div><label>Medicine</label><input data-f="medicine_name" value="${esc(m.medicine_name)}"></div>
+   <div><label>Strength</label><input data-f="strength" value="${esc(m.strength)}" placeholder="500 mg"></div>
+   <div><label>Days</label><input data-f="duration_days" type="number" min="0" value="${m.duration_days||""}" placeholder="–"></div>
+   <div><label>Food</label><select data-f="food_instruction">${["none","before","after","with"].map(f=>`<option value="${f}" ${m.food_instruction==f?"selected":""}>${{none:"No instruction",before:"Before food",after:"After food",with:"With food"}[f]}</option>`).join("")}</select></div></div>
+   <div class="slots">${SL.map(s=>{const q=m.slots[s[0]]||0;return`<div class="slot ${q?"act":""}"><div class="ic">${s[1]}</div><b>${s[2]}</b><small>${s[3]}</small><div class="step"><button data-s="${s[0]}" data-d="-1" aria-label="less">−</button><b>${q?frac(q):"0"}</b><button data-s="${s[0]}" data-d="1" aria-label="more">+</button></div></div>`}).join("")}</div>
+   ${m.warnings.length?`<ul class="warns">${m.warnings.map(w=>`<li>⚠ ${esc(w)}</li>`).join("")}</ul>`:""}
+   <label class="confirm"><input type="checkbox" data-f="confirmed" ${m.confirmed?"checked":""}> I checked this against my prescription — it’s correct</label></div>`).join("")||'<div class="empty">No medicines yet.</div>'}
+$("#meds").addEventListener("input",e=>{const c=e.target.closest(".med");if(!c||!e.target.dataset.f)return;const m=meds[c.dataset.i],f=e.target.dataset.f;m[f]=f=="confirmed"?e.target.checked:f=="duration_days"?+e.target.value||0:e.target.value;if(f=="food_instruction"||f=="confirmed"||f=="medicine_name"||f=="strength"||f=="duration_days")renderPlan()});
+$("#meds").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const c=b.closest(".med"),i=+c.dataset.i;
+  if(b.dataset.del!==undefined){meds.splice(+b.dataset.del,1);renderMeds();return renderPlan()}
+  if(b.dataset.s){const m=meds[i],cur=m.slots[b.dataset.s]||0,n=Math.max(0,Math.min(4,cur+(+b.dataset.d)*.5));if(n)m.slots[b.dataset.s]=n;else delete m.slots[b.dataset.s];
+    if(hasDose(m)&&m.method_used=="default_fallback")m.method_used="edited by you";renderMeds();renderPlan()}});
+$("#add").onclick=()=>{meds.push({medicine_name:"",strength:"",duration_days:0,slots:{},food_instruction:"none",warnings:[],method_used:"added by you",confidence:1,needs_review:false,confirmed:false});renderMeds();renderPlan()};
+
+function renderPlan(){
+  const done=meds.filter(m=>m.confirmed).length;
+  $("#plansub").innerHTML=!meds.length?"":done==meds.length?'<span class="chip ok">✓ All medicines confirmed</span>':`<span class="chip warn">⚠ ${meds.length-done} of ${meds.length} not yet confirmed — tick “I checked this” above</span>`;
+  const html=SL.map(s=>{const rows=meds.filter(m=>m.slots[s[0]]).map(m=>{const q=m.slots[s[0]],f=FOOD[lang][m.food_instruction];
+    return`<div class="dose"><span class="pills">${"💊".repeat(Math.floor(q))}${q%1?"◐":""}</span><div><span class="n">${frac(q)} ${lang=="hi"?"गोली":(q>1?"tablets":"tablet")} · ${esc(m.medicine_name||"?")}</span><div class="m">${[esc(m.strength),f,m.duration_days?m.duration_days+(lang=="hi"?" दिन":" days"):""].filter(Boolean).join(" · ")}</div></div>${m.confirmed?'<span class="tag">✓ confirmed</span>':""}</div>`}).join("");
+    return rows?`<div class="ts"><div class="tt"><div class="ic">${s[1]}</div><b>${lang=="hi"?s[4]:s[2]}</b><small>~${s[3]}</small></div><div>${rows}</div></div>`:""}).join("");
+  const prn=meds.filter(m=>!hasDose(m)&&/prn|sos/i.test(m.method_used)).map(m=>`<div class="dose"><span class="pills">⏱</span><div><span class="n">${esc(m.medicine_name)}</span><div class="m">${lang=="hi"?"ज़रूरत पड़ने पर — फार्मासिस्ट से अधिकतम मात्रा पूछें":"Only when needed — ask your pharmacist how often and the daily maximum"}</div></div></div>`).join("");
+  $("#tl").innerHTML=(html||prn)?html+(prn?`<div class="ts"><div class="tt"><div class="ic">🆘</div><b>${lang=="hi"?"ज़रूरत पर":"As needed"}</b></div><div>${prn}</div></div>`:""):'<div class="empty">No dose times set yet. Use the + buttons above to set them.</div>'}
+
+function script(){const L=lang;let t=[L=="hi"?"आपकी दवाइयों का समय।":"Here is your medicine schedule."];
+  SL.forEach(s=>meds.filter(m=>m.slots[s[0]]).forEach(m=>{const q=m.slots[s[0]],f=FOOD[L][m.food_instruction],n=frac(q).replace("½","half").replace("¼","quarter");
+    t.push(L=="hi"?`${s[4]} में, ${m.medicine_name} की ${q} गोली${f?", "+f:""}।`:`In the ${s[0]}, take ${n} ${q>1?"tablets":"tablet"} of ${m.medicine_name}${f?", "+f:""}.`)}));
+  t.push(L=="hi"?"कृपया डॉक्टर या फार्मासिस्ट से पुष्टि करें।":"Please confirm with your doctor or pharmacist.");return t.join(" ")}
+$("#speak").onclick=()=>{if(!("speechSynthesis" in window))return alert("Voice is not supported on this device.");speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(script());u.lang=lang=="hi"?"hi-IN":"en-IN";u.rate=.85;speechSynthesis.speak(u)};
+$("#stop").onclick=()=>speechSynthesis.cancel();$("#print").onclick=()=>print();
+</script>
+</body>
+</html>

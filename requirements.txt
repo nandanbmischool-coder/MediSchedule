@@ -1,0 +1,4 @@
+Pillow>=10.0.0
+pytesseract>=0.3.10
+Flask>=3.0.0
+certifi

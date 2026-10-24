@@ -1,0 +1,41 @@
+case_id,pattern_type,degradation_level,ocr_text,ocr_cer,predicted_name,predicted_slots,predicted_food,predicted_method,dosage_confidence,name_confidence,overall_confidence,name_correct,food_correct,slots_correct,method_correct,full_pipeline_correct,baseline_full_correct,baseline_slots_correct
+paracetamol_numeric3,numeric3,clean,PARACETAMOL 500mg | Tab 1-0-1 |  | After food,0.0263,Paracetamol,"{""morning"": 1, ""afternoon"": 0, ""night"": 1}",after,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+paracetamol_numeric3,numeric3,light,PARACETAMOL 500mg | Tab 1-0-1 |  | After food,0.0263,Paracetamol,"{""morning"": 1, ""afternoon"": 0, ""night"": 1}",after,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+paracetamol_numeric3,numeric3,medium,PARACETAMOL 500mg | Tab 1-0-1 |  | After food,0.0263,Paracetamol,"{""morning"": 1, ""afternoon"": 0, ""night"": 1}",after,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+paracetamol_numeric3,numeric3,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+amoxicillin_numeric3,numeric3,clean,AMOXICILLIN 250mg | Capsule 1-1-1 |  | Before food,0.0233,Amoxicillin,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+amoxicillin_numeric3,numeric3,light,AMOXICILLIN 250mg | Capsule 1-1-1 |  | Before food,0.0233,Amoxicillin,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+amoxicillin_numeric3,numeric3,medium,AMOXICILLIN 250mg | Capsule 1-1-1 |  | Before food,0.0233,Amoxicillin,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,True
+amoxicillin_numeric3,numeric3,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+azithromycin_numeric4,numeric4,clean,AZITHROMYCIN 500mg | Tab 1-1-1-1 |  | Before food,0.0238,Azithromycin,"{""morning"": 1, ""afternoon"": 1, ""evening"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,False
+azithromycin_numeric4,numeric4,light,AZITHROMYCIN 500mg | Tab 1-1-1-1 |  | Before food,0.0238,Azithromycin,"{""morning"": 1, ""afternoon"": 1, ""evening"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,False
+azithromycin_numeric4,numeric4,medium,AZITHROMYCIN 500mg | Tab 1-1-1-1 | Before food,0.0,Azithromycin,"{""morning"": 1, ""afternoon"": 1, ""evening"": 1, ""night"": 1}",before,numeric_pattern,0.95,0.8,0.8,True,True,True,True,True,False,False
+azithromycin_numeric4,numeric4,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+metformin_bd,abbreviation,clean,METFORMIN 500mg | Tab BD |  | After food,0.0303,Metformin,"{""morning"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+metformin_bd,abbreviation,light,METFORMIN 500mg | Tab BD |  | After food,0.0303,Metformin,"{""morning"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+metformin_bd,abbreviation,medium,METFORMIN 500mg | Tab BD |  | After food,0.0303,Metformin,"{""morning"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+metformin_bd,abbreviation,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+ibuprofen_tds,abbreviation,clean,IBUPROFEN 400mg | Tab TDS |  | After food,0.0294,Ibuprofen,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+ibuprofen_tds,abbreviation,light,IBUPROFEN 400mg | Tab TDS |  | After food,0.0294,Ibuprofen,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+ibuprofen_tds,abbreviation,medium,\BUPROFEN 400m9 | Jab TDS | After food,0.0882,Buprofen,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",after,abbreviation,0.9,0.8,0.8,False,True,True,True,False,False,False
+ibuprofen_tds,abbreviation,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+atorvastatin_hs,abbreviation,clean,ATORVASTATIN 10mg | Tab HS,0.0,Atorvastatin,"{""night"": 1}",none,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+atorvastatin_hs,abbreviation,light,ATORVASTATIN 10mg | Tab HS,0.0,Atorvastatin,"{""night"": 1}",none,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+atorvastatin_hs,abbreviation,medium,ATORVASTATIN 10mg | Tab HS,0.0,Atorvastatin,"{""night"": 1}",none,abbreviation,0.9,0.8,0.8,True,True,True,True,True,False,False
+atorvastatin_hs,abbreviation,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,True,False,False,False,False,False
+cetirizine_once_daily,phrase,clean,CETIRIZINE 10mg | Tablet - once daily,0.0,Cetirizine,"{""morning"": 1}",none,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,True
+cetirizine_once_daily,phrase,light,CETIRIZINE 10mg | Tablet - once daily,0.0,Cetirizine,"{""morning"": 1}",none,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,True
+cetirizine_once_daily,phrase,medium,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,True,True,False,False,False,True
+cetirizine_once_daily,phrase,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,True,True,False,False,False,True
+doxycycline_twice_daily,phrase,clean,DOXYCYCLINE 100mg | Take twice daily |  | After food,0.0222,Doxycycline,"{""morning"": 1, ""night"": 1}",after,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,False
+doxycycline_twice_daily,phrase,light,DOXYCYCLINE 100mg | Take twice daily |  | After food,0.0222,Doxycycline,"{""morning"": 1, ""night"": 1}",after,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,False
+doxycycline_twice_daily,phrase,medium,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+doxycycline_twice_daily,phrase,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+omeprazole_thrice_daily,phrase,clean,OMEPRAZOLE 20mg | Take thrice daily |  | Before food,0.0222,Omeprazole,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,False
+omeprazole_thrice_daily,phrase,light,OMEPRAZOLE 20mg | Take thrice daily |  | Before food,0.0222,Omeprazole,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,False
+omeprazole_thrice_daily,phrase,medium,OMEPRAZOLE 20mg | | Take thrice daily |  | Before food,0.0667,Omeprazole,"{""morning"": 1, ""afternoon"": 1, ""night"": 1}",before,frequency_phrase,0.85,0.8,0.8,True,True,True,True,True,False,False
+omeprazole_thrice_daily,phrase,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,False,False,False,False,False,False
+crocin_sos,prn,clean,"CROCIN 650mg | Tab SOS |  | For fever, max 3 per day",0.0222,Crocin,"{""morning"": 1}",none,prn_or_stat,0.55,0.8,0.55,True,True,True,True,True,False,False
+crocin_sos,prn,light,"CROCIN 650mg | Tab SOS |  | For fever, max 3 per day",0.0222,Crocin,"{""morning"": 1}",none,prn_or_stat,0.55,0.8,0.55,True,True,True,True,True,False,False
+crocin_sos,prn,medium,"CROCIN 650mg | Tab Sos |  | For fever, Max 3 per day",0.0889,Crocin,"{""morning"": 1}",none,prn_or_stat,0.55,0.8,0.55,True,True,True,True,True,False,False
+crocin_sos,prn,heavy,,1.0,Unknown Medicine,"{""morning"": 1}",none,default_fallback,0.25,0.0,0.0,False,True,False,False,False,False,False
